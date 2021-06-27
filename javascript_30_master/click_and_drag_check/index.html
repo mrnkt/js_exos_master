@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Click and Drag</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="items">
+    <div class="item item1">01</div>
+    <div class="item item2">02</div>
+    <div class="item item3">03</div>
+    <div class="item item4">04</div>
+    <div class="item item5">05</div>
+    <div class="item item6">06</div>
+    <div class="item item7">07</div>
+    <div class="item item8">08</div>
+    <div class="item item9">09</div>
+    <div class="item item10">10</div>
+    <div class="item item11">11</div>
+    <div class="item item12">12</div>
+    <div class="item item13">13</div>
+    <div class="item item14">14</div>
+    <div class="item item15">15</div>
+    <div class="item item16">16</div>
+    <div class="item item17">17</div>
+    <div class="item item18">18</div>
+    <div class="item item19">19</div>
+    <div class="item item20">20</div>
+    <div class="item item21">21</div>
+    <div class="item item22">22</div>
+    <div class="item item23">23</div>
+    <div class="item item24">24</div>
+    <div class="item item25">25</div>
+  </div>
+
+<script>
+
+const serpentin = document.querySelector('.items'); // une seule class .items
+let mousedownencours = false; // va signaler si je clique ou pas 
+let pointdeclick;
+let scrollLeft;
+
+serpentin.addEventListener('mousedown', (event) => { // le fait de mettre un event ça permettra d'enregister l'evenement du click
+    mousedownencours = true; // true car on ecoute le mousedown
+    serpentin.classList.add('active'); // class qui change legerement le scale et rend le fond grise
+    // console.log(event);
+    // console.log(event.pageX);
+    pointdeclick = event.pageX - serpentin.offsetLeft; //permet de ne pas compter la marge
+    // on doit savoir, ou est l'ancre en quelque sorte, ou le click initial s'est fait
+    // page x retourne les coordonnees horizontales du click par rapport au bord gauche de la fenetre
+    // offsetLeft renvoie la position du coin supérieur gauche de l'élément
+    scrollLeft = serpentin.scrollLeft; // definit ou obtient le nombre de pixels dont le contenu est defile vers la gauche
+  });
+
+  serpentin.addEventListener('mouseleave', () => {
+    mousedownencours = false; // false car on quite la zone, meme si on reste sur mousedown en meme temps
+    serpentin.classList.remove('active');
+  });
+
+  serpentin.addEventListener('mouseup', () => {
+    mousedownencours = false;
+    serpentin.classList.remove('active');
+  });
+
+  serpentin.addEventListener('mousemove', (event) => {
+    if (!mousedownencours) return;  // l'exclamation c'est pour dire que mousedownencours n'est pas true
+    event.preventDefault(); // annule l'evenement s'il est annulable (placer un pointer-events none sur le texte aurait marché?)
+    const x = event.pageX - serpentin.offsetLeft;
+    // console.log({x, pointdeclick});
+    // pour savoir ou sont ces variables, les mettre dans des acolades
+    // la valeur de x changera car c'est la souris qui bouge, mais le pointdeclick restera le meme
+    const trace = (x - pointdeclick) * 10; // ça va nous dire a quel point on a devier du point de depart
+    // * 10 ça va permettre de multiplier la distance
+    // console.log(trace);
+    serpentin.scrollLeft = scrollLeft - trace;
+  });
+ 
+</script>
+
+</body>
+</html>

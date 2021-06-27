@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Flex Panels 💪</title>
+  <link href='https://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+
+  <style>
+
+    html {
+      box-sizing: border-box;
+      background: #ffc600;
+      font-family: 'helvetica neue';
+      font-size: 20px;
+      font-weight: 200;
+    }
+    
+    body {
+      margin: 0;
+    }
+    
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
+
+    .panels {
+      display: flex;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .panel {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      /* flex-grow : 1; flex-shrink : 1; flex-basis : 0; */
+      background: #6B0F9C;
+      box-shadow: inset 0 0 0 5px rgba(255,255,255,0.1);
+      color: white;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      /* Safari transitionend event.propertyName === flex */
+      /* Chrome + FF transitionend event.propertyName === flex-grow */
+      transition:
+        font-size 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+        flex 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+        background 0.2s;
+      font-size: 20px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
+    .panel2 { background-image:url(https://source.unsplash.com/rFKUFzjPYiQ/1500x1500); }
+    .panel3 { background-image:url(https://images.unsplash.com/photo-1465188162913-8fb5709d6d57?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&w=1500&h=1500&fit=crop&s=967e8a713a4e395260793fc8c802901d); }
+    .panel4 { background-image:url(https://source.unsplash.com/ITjiVXcwVng/1500x1500); }
+    .panel5 { background-image:url(https://source.unsplash.com/3MNzGlQM7qs/1500x1500); }
+
+    /* Flex Children */
+    .panel > * {
+      display: flex;
+      /* flex: 1 0 auto; */
+      flex-grow : 1;
+      /* flex-shrink : 0; */
+      /* flex-basis : auto; */
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      width: 100%;
+      transition: transform 0.5s;
+    }
+
+    .panel > *:first-child { transform: translateY(-100%); }
+    /* chacun des premiers enfants (la premiere ligne de texte) */
+    .panel.open-active > *:first-child { transform: translateY(0); }
+    /* la pseudo-classe :active permet de cibler un élément lorsque celui-ci est activé par l'utilisateur. pourquoi mettre - devant? */
+    .panel > *:last-child { transform: translateY(100%); }
+    /* derniere ligne */
+    .panel.open-active > *:last-child { transform: translateY(0); }
+
+    .panel p {
+      text-transform: uppercase;
+      font-family: 'Amatic SC', cursive;
+      text-shadow: 0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
+      font-size: 2em;
+    }
+    
+    .panel p:nth-child(2) {
+      font-size: 4em;
+    }
+
+    .panel.open {
+      /* width: 500%; */
+      /* redefinir la largeur ne prends pas sur le flex? */
+      flex-grow: 5;
+      /* flex: 3; */
+      /* shrink x3? */
+      font-size: 40px;
+    }
+
+    /* PREMIER ESSAI EN PARTANT DU MILIEU ET EN DEPLACANT LES ELEMENTS AU DESSUS ET EN DESSOUS */
+    /* PREMIER ESSAI EN PARTANT DU MILIEU ET EN DEPLACANT LES ELEMENTS AU DESSUS ET EN DESSOUS */
+    /* PREMIER ESSAI EN PARTANT DU MILIEU ET EN DEPLACANT LES ELEMENTS AU DESSUS ET EN DESSOUS */
+
+    /* .mystyle {
+      font-size: 40px;
+    }
+    .up800px {
+      transform: translateY(-800px) scale(-1,-1);
+    }
+    .textgrow {
+      transform: scale(2,2);
+    }
+    .down800px {
+      transform: translateY(800px) scale(-1,-1);
+    }
+    .panelwidth {
+      width: 50%;
+    } */
+
+  </style>
+
+  <div class="panels">
+<!-- 
+    <div id="testpanel" class="panel panel1" onclick="toto()">
+      <p id="testhey">Hey</p>
+      <p id="testlets">Let's</p>
+      <p id="testdance">Dance</p>
+    </div> -->
+
+    <div class="panel panel1">
+      <p>Hey</p>
+      <p>Let's</p>
+      <p>Dance</p>
+    </div>
+    <div class="panel panel2">
+      <p>Give</p>
+      <p>Take</p>
+      <p>Receive</p>
+    </div>
+    <div class="panel panel3">
+      <p>Experience</p>
+      <p>It</p>
+      <p>Today</p>
+    </div>
+    <div class="panel panel4">
+      <p>Give</p>
+      <p>All</p>
+      <p>You can</p>
+    </div>
+    <div class="panel panel5">
+      <p>Life</p>
+      <p>In</p>
+      <p>Motion</p>
+    </div>
+  </div>
+
+  <script>
+
+    // function toto() {
+    //   //  var element = document.getElementById("test3");
+    //   var element = document.querySelector("#testhey");
+    //   element.classList.toggle("up800px");
+
+    //   var element = document.querySelector("#testhey");
+    //   element.classList.toggle("textgrow");
+
+    //   var element = document.querySelector("#testdance");
+    //   element.classList.toggle("down800px");
+
+    //   var element = document.querySelector("#testpanel");
+    //   element.classList.toggle("panelwidth");
+    // }
+
+    const panels = document.querySelectorAll(".panel");
+    // node list de tt les panel
+
+    function toto() {
+      this.classList.toggle("open");
+      // va ajouter ou suppr la class toggle qui concerne la largeur du panel et la taille du texte du milieu
+    }
+
+    function tata() {
+        this.classList.toggle("open-active");
+    }
+
+    panels.forEach(panel => panel.addEventListener("click", toto));
+    // pour chaque panel on va ecouter le click
+    panels.forEach(panel => panel.addEventListener("click", tata));
+
+  </script>
+
+</body>
+</html>

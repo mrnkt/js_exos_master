@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Mouse Shadow</title>
+</head>
+
+<body>
+
+  <style>
+
+  html {
+    color: black;
+    font-family: sans-serif;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+  }
+
+  h1 {
+    pointer-events: none; /* repris depuis l'exercice du trombinoscope, permets de survoler la zone sans qu'il n'y est d'evenement */
+    text-shadow: 10px 10px 0 rgba(0,0,0,1);
+    font-size: 100px;
+  }
+
+  </style>
+
+<div class="hero">
+  <h1 contenteditable>🔥WOAH!</h1>
+</div>
+
+  <script>
+
+    const hero = document.querySelector('.hero'); // meme si on ecoute hero, il a un enfant h1
+    const woah = hero.querySelector('h1');
+    const distance = 100; // a quelle distance le textShadow doit aller
+
+    function shadow(event) {
+      // console.log(event)
+
+      const width = hero.offsetWidth;
+      const height = hero.offsetHeight;
+      // const { offsetWidth: width, offsetHeight: height } = hero;
+
+      let { offsetX: x, offsetY: y } = event; // donne la position du curseur, a travers l'event
+      // console.log(x, y);
+
+      // if (this !== event.target) {
+      //   x = x + event.target.offsetLeft;
+      //   y = y + event.target.offsetTop;
+      // }
+
+      const xdistance = Math.round((x / width * distance) - (distance / 2));
+      const ydistance = Math.round((y / height * distance) - (distance / 2));
+      // si 100px sont parcourus, 50px le serait vers la droite par ex, et -50px vers la gauche, pour un total de 100px
+
+      woah.style.textShadow = `
+        ${xdistance}px ${ydistance}px 0 red,
+        ${xdistance * -1}px ${ydistance}px 0 orange,
+        ${ydistance}px ${xdistance * -1}px 0 yellow,
+        ${ydistance * -1}px ${xdistance}px 0 green
+      `;
+        // -1 pour que le shadow aille dans le sens negatif, contraire
+    }
+
+    hero.addEventListener('mousemove', shadow); // quand la souris bouge, la fonction shadow s'execute
+
+  </script>
+
+</body>
+</html>

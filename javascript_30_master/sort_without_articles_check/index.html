@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Sort Without Articles</title>
+</head>
+
+<body>
+
+  <style>
+
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: url("https://source.unsplash.com/nDqA4d5NL0k/2000x2000");
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    #bands {
+      list-style: inside square;
+      font-size: 20px;
+      background: white;
+      width: 500px;
+      margin: auto;
+      padding: 0;
+      box-shadow: 0 0 0 20px rgba(0, 0, 0, 0.05);
+    }
+    
+    #bands li {
+      border-bottom: 1px solid #efefef;
+      padding: 20px;
+    }
+    
+    #bands li:last-child {
+      border-bottom: 0;
+    }
+
+    a {
+      color: #ffc600;
+      text-decoration: none;
+    }
+
+  </style>
+
+  <ul id="bands"></ul>
+
+<script>
+
+  const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+
+  function retirer(bandName) { // on prends le nom des groupes
+    return bandName.replace(/^(a |the |an )/i, '').trim();
+    // replace syntax obligatoire
+    // ^ veut dire que le mot demarre par
+    // i pour que ca ne soit pas sensible aux majuscules
+    // espace entre les articles
+    // on remplace les articles par des guillemets vides
+    // trim() permet de retirer les blancs en début et fin de chaîne
+    // pour tester si la fonction marche, on tape dans la console retirer("an old dog"), ca va renvoyer "old dog"
+  }
+
+  // const sortedBands = bands.sort((a, b) {
+  //   if (retirer(a) > retirer(b)) {
+  //     return 1;
+  //   } else {
+  //     return -1;
+  //   }
+  // });
+  // console.log(sortedBands);
+
+  // const sortedBands = bands.sort(function (a, b) {
+  //   return retirer(a) > retirer(b) ? 1 : -1;
+  // });
+
+  const sortedBands = bands.sort((a, b) => retirer(a) > retirer(b) ? 1 : -1);
+  // ? veut dire, "si c'est vrai", alors, return 1 ou sinon -1
+  // sort va prendre 2 fonctions, a et b, on va comparer a et b, lequel passe avant l'autre, dans ce cas, dans l'ordre alphabetique
+
+  document.querySelector('#bands').innerHTML =
+    sortedBands
+      .map(band => `<li>${band}</li>`) // map crée un nouveau tableau avec les résultats de l'appel d'une fonction fournie sur chaque élément du tableau appelant https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+      .join(''); // ca va renvoyer un array donc on va utiliser join pour enlever les virgules
+
+  console.log(sortedBands);
+
+</script>
+
+</body>
+</html>

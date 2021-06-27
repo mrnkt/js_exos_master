@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>JS + CSS Clock</title>
+</head>
+
+<body>
+
+  <style>
+
+    html {
+      background: #018DED url(http://unsplash.it/1500/1000?image=881&blur=5);
+      background-size: cover;
+      font-family: 'helvetica neue';
+      text-align: center;
+      font-size: 10px;
+    }
+
+    body {
+      margin: 0;
+      font-size: 2rem;
+      display: flex;
+      flex: 1;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    .clock {
+      width: 30rem;
+      height: 30rem;
+      border: 20px solid white;
+      border-radius: 50%;
+      margin: 50px auto;
+      position: relative;
+      padding: 2rem;
+      box-shadow:
+        0 0 0 4px rgba(0,0,0,0.1),
+        inset 0 0 0 3px #EFEFEF,
+        inset 0 0 10px black,
+        0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .clock-face {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: translateY(-3px); /* account for the height of the clock hands */
+    }
+
+    .hand {
+      width: 50%;
+      height: 6px;
+      background: black;
+      position: absolute;
+      top: 50%;
+      transform-origin: 100%; /* va permettre de changer le pt d'origine de la rotation */
+      transform: rotate(90deg); /* on demarre de 12h */
+      transition: all 0.5;
+      transition-timing-function: ease-in-out;
+    }
+
+    .second-hand {
+      background: red;
+    }
+
+    .hour-hand {
+      background: linear-gradient(90deg, rgba(0,0,0,0) 25%, rgba(0,0,0,1) 100%);
+    }
+
+  </style>
+
+  <div class="clock">
+    <div class="clock-face">
+      <div class="hand hour-hand"></div>
+      <div class="hand min-hand"></div>
+      <div class="hand second-hand"></div>
+    </div>
+  </div>
+
+  <script>
+
+  function horloge() {
+
+    let aiguillesecondes = document.querySelector('.second-hand');
+    let aiguilleminutes = document.querySelector('.min-hand');
+    let aiguilleheures = document.querySelector('.hour-hand');
+
+    let maintenant = new Date();
+
+    let secondes = maintenant.getSeconds(); /* donne les secondes actuelles, ttes les secondes */
+    let secondesdegrees = ((secondes / 60) * 360) + 90; /* transforme chaque seconde en degree, 60sec ca sera 360deg par ex */
+    // la rotation se fait par defaut de gauche a droite, et vu que j'ai fait partir de 90deg, je dois rajouter 90deg pour bien synchroniser les secondes ac l'angle
+    // console.log(secondes);
+    aiguillesecondes.style.transform = `rotate(${secondesdegrees}deg)`;
+
+    let minutes = maintenant.getMinutes(); /* syntax obligatoire par rapport a new Date, voir l'exo pour afficher les minutes actuelles */
+    let minutesdegrees = ((minutes / 60) * 360) + ((secondes/60)*6) + 90;
+    aiguilleminutes.style.transform = `rotate(${minutesdegrees}deg)`;
+
+    let heure = maintenant.getHours();
+    let heuredegrees = ((heure / 12) * 360) + ((minutes/60)*30) + 90;
+    aiguilleheures.style.transform = `rotate(${heuredegrees}deg)`;
+
+  }
+
+  setInterval(horloge, 1000); /* la fonction va s'executer ttes les secondes */
+
+  </script>
+
+</body>
+</html>

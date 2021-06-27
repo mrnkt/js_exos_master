@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
+</head>
+
+<body>
+
+<script>
+
+const touchespressee = []; // quand on appuie sur une touche, ca va l'enregistrer dans un tableau
+const motsecret = 'um'; // on definit le mot secret
+
+window.addEventListener('keyup', (event) => {
+  // console.log(event.key);
+  touchespressee.push(event.key); // ça va push les touches pressees vers le tableau touchespressees
+
+  touchespressee.splice(-motsecret.length - 1, touchespressee.length - motsecret.length);
+  // splice() modifie le contenu d'un tableau en retirant des elements et/ou en ajoutant de nouveaux elements a meme le tableau. On peut ainsi vider ou remplacer une partie d'un tableau
+  // vu qu'on cherche un mot, ce mot a un certain nombre de lettres, on va faire en sorte que le tableau est la meme longueur que le mot
+  // -motsecret.length - 1 va prendre de la longueur du motsecret - 1, ca va couper le tableau apres la 2eme lettre enregistree
+  // touchespressee.length - motsecret.length, va donner le nombre exact de lettres dont on a besoin
+
+  if (touchespressee.join('').includes(motsecret)) {
+  // join cree et renvoie une nouvelle chaine de caracteres en concatenant tous les elements d'un tableau
+  // console.log(elements.join()); // expected output: "Fire,Air,Water"
+  // console.log(elements.join('')); // expected output: "FireAirWater"
+  // console.log(elements.join('-')); // expected output: "Fire-Air-Water"
+  // on verifie si l'array contient le mot secret
+
+    cornify_add();
+  }
+});
+
+</script>
+
+</body>
+</html>

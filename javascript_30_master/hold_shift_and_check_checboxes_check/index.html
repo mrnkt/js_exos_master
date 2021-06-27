@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Hold Shift to Check Multiple Checkboxes</title>
+</head>
+
+<body>
+
+  <style>
+
+    html {
+      font-family: sans-serif;
+      background: #ffc600;
+    }
+
+    .inbox {
+      max-width: 400px;
+      margin: 50px auto;
+      background: white;
+      border-radius: 5px;
+      box-shadow: 10px 10px 0 rgba(0,0,0,0.1);
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #F1F1F1;
+    }
+
+    .item:last-child {
+      border-bottom: 0;
+    }
+
+    input:checked + p {
+      background: #F9F9F9;
+      text-decoration: line-through;
+    }
+
+    input[type="checkbox"] {
+      margin: 20px;
+    }
+
+    p {
+      margin: 0;
+      padding: 20px;
+      transition: background 0.2s;
+      flex: 1;
+      font-family:'helvetica neue';
+      font-size: 20px;
+      font-weight: 200;
+      border-left: 1px solid #D1E2FF;
+    }
+  </style>
+   <!--
+   The following is a common layout you would see in an email client.
+
+   When a user clicks a checkbox, holds Shift, and then clicks another checkbox a few rows down, all the checkboxes entrepremieretdernier those two checkboxes should be checked.
+
+  -->
+  <div class="inbox">
+    <div class="item">
+      <input type="checkbox">
+      <p>This is an inbox layout.</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Check one item</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Hold down your Shift key</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Check a lower item</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Everything in between should also be set to checked</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Try to do it without any libraries</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Just regular JavaScript</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Good Luck!</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Don't forget to tweet your result!</p>
+    </div>
+  </div>
+
+<script>
+
+const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
+
+let lastChecked; // let parce que la derniere case a etre coche sera differente a chaque fois
+
+function toto(event) {
+  // console.log(event);
+
+  let entrepremieretdernier = false; // ca va etre true entre le premier coche et le dernier coche, arrive au dernier coche ca passe a false
+
+  if (event.shiftKey && this.checked) {
+
+    checkboxes.forEach(checkbox => {
+      // console.log(checkbox); 
+      // en cochant sur shift et en allant coche sur un element plus bas, ca affiche les checkbox du premier coche au dernier
+      // tout ces elements entre il faut les passer en true
+
+      if (checkbox === this || checkbox === lastChecked) {
+        entrepremieretdernier = !entrepremieretdernier;
+      }
+
+      // - on va loop chaque checkbox
+      // - dans le cas ou le 2eme est le dernier coche, le 1er n'est pas entrepremieretdernier
+      // - le 2eme va etre true car checkbox === this renvoie a lastChecked = this
+      // - donc on se dirige sur inBetween = !inBetween
+
+      // - on a defini une var entrepremieretdernier qui est sur false
+      // - quand on tombe sur la 1ere checkbox coche, la var passe sur true et enclenche checkbox.checked = true;
+      // - au dernier coche, inBetween passe sur false
+
+      // ca marche dnas les deux sens grace a checkbox === this || checkbox === lastChecked
+
+      if (entrepremieretdernier) {
+        checkbox.checked = true; // ca va cocher ceux entre le premier et dernier
+      }
+
+    });
+  }
+
+  lastChecked = this; // le dernier coche est la
+}
+
+checkboxes.forEach(checkbox => checkbox.addEventListener('click', toto)); // quand on click ca va lancer la fonction 
+
+</script>
+
+</body>
+</html>
